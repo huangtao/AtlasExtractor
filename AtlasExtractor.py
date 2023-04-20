@@ -109,17 +109,21 @@ def explore_bounded_box(pStart, img):
     q = []
     q.append(pStart)
     sprite.expand(pStart)
-    marks = [[0 for i in range(1, img.width+1)]for j in range(1, img.height+1)]
+    marks = [[0 for j in range(img.height+1)]for i in range(img.width+1)]
     while (len(q) > 0):
         p = q.pop(0)
         sprite.expand(p)
         neighbouring = load_neighbouring_pixels(p, img)
-        for n in neighbouring:
-            if (marks[n[0]][n[1]] == 1):
-                continue
-            marks[n[0]][n[1]] = 1
-            if (img.getpixel(n)[3] > 0):
-                q.append(n)
+        try:
+            for n in neighbouring:
+                if (marks[n[0]][n[1]] == 1):
+                    continue
+                marks[n[0]][n[1]] = 1
+                if (img.getpixel(n)[3] > 0):
+                    q.append(n)
+        except:
+            print(neighbouring)
+            break
     return sprite
 
 
